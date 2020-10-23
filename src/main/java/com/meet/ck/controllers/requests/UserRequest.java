@@ -1,6 +1,5 @@
 package com.meet.ck.controllers.requests;
 
-import com.meet.ck.database.entities.ContactData;
 import com.meet.ck.database.enums.Gender;
 import com.meet.ck.database.enums.Interests;
 import lombok.AllArgsConstructor;
