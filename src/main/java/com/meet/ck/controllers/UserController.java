@@ -43,8 +43,8 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUserEnabled(@PathVariable Long userId, Boolean enabled) {
+    @PutMapping("/{userId}/enable")
+    public ResponseEntity<Void> updateUserEnabled(@PathVariable Long userId, boolean enabled) {
         userService.updateUserEnabled(userId, enabled);
         return new ResponseEntity<>(HttpStatus.OK);
     }
