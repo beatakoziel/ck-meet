@@ -15,7 +15,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return (new Docket(DocumentationType.SWAGGER_2))
-                .host("localhost:8080")
+                .host("localhost:8081")
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
