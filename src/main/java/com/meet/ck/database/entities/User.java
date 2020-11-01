@@ -59,4 +59,7 @@ public class User {
     @Column(nullable = false, length = 100)
     private Short preferredAgeToMeetTo;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Image avatar;
+
 }

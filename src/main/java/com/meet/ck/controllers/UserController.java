@@ -1,6 +1,8 @@
 package com.meet.ck.controllers;
 
+import com.meet.ck.controllers.converters.UserConverter;
 import com.meet.ck.controllers.requests.UserRequest;
+import com.meet.ck.controllers.response.UserResponse;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.services.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.meet.ck.controllers.UserConverter.requestToEntity;
-import static com.meet.ck.controllers.UserConverter.requestToUpdate;
+import static com.meet.ck.controllers.converters.UserConverter.requestToEntity;
+import static com.meet.ck.controllers.converters.UserConverter.requestToUpdate;
 
 @RestController
 @RequestMapping("/users")
@@ -29,8 +31,11 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
-        return new ResponseEntity<>(userService.getUsersList(), HttpStatus.OK);
+    public ResponseEntity<List<UserResponse>> getUsers() {
+        return new ResponseEntity(
+                userService.getUsersList().stream().map(UserConverter::entityToResponse),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/{userId}")

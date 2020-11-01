@@ -10,10 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContactDataRequest {
-
     private String email;
-
     private String phoneNumber;
-
     private String linkToFacebookProfile;
 }

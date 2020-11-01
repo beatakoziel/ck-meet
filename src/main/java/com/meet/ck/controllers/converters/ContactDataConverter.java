@@ -1,6 +1,7 @@
-package com.meet.ck.controllers;
+package com.meet.ck.controllers.converters;
 
 import com.meet.ck.controllers.requests.ContactDataRequest;
+import com.meet.ck.controllers.response.ContactDataResponse;
 import com.meet.ck.database.entities.ContactData;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,14 @@ public class ContactDataConverter {
                 .email(contactDataRequest.getEmail())
                 .linkToFacebookProfile(contactDataRequest.getLinkToFacebookProfile())
                 .phoneNumber(contactDataRequest.getPhoneNumber())
+                .build();
+    }
+
+    public static ContactDataResponse entityToResponse(ContactData contactData) {
+        return ContactDataResponse.builder()
+                .email(contactData.getEmail())
+                .phoneNumber(contactData.getPhoneNumber())
+                .linkToFacebookProfile(contactData.getLinkToFacebookProfile())
                 .build();
     }
 }
