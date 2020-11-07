@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.meet.ck.controllers.converters.UserConverter.requestToEntity;
 import static com.meet.ck.controllers.converters.UserConverter.requestToUpdate;
 
 @RestController
@@ -23,12 +22,6 @@ import static com.meet.ck.controllers.converters.UserConverter.requestToUpdate;
 public class UserController {
 
     private final IUserService userService;
-
-    @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody UserRequest userRequest) {
-        userService.createUser(requestToEntity(userRequest));
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers() {

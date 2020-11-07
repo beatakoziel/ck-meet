@@ -37,6 +37,8 @@ public class DataLoader implements ApplicationRunner {
             //user1
             userRepository.save(User.builder()
                     .id(1L)
+                    .username("ania")
+                    .password("$2a$10$VnLSeqWqthL83OVxbOurEOqH0aOBh.0Q8JkPXQYaabcwCrmmYGtsG")
                     .enabled(true)
                     .gender(Gender.WOMAN)
                     .nickname("Ania")
@@ -54,70 +56,77 @@ public class DataLoader implements ApplicationRunner {
                     .avatar(image1)
                     .build()
             );
+
+            //image2
+            Image image2 = addImage(2L, "adam.jpg");
+            //user2
+            userRepository.save(User.builder()
+                    .id(2L)
+                    .username("adam")
+                    .password("$2a$10$VnLSeqWqthL83OVxbOurEOqH0aOBh.0Q8JkPXQYaabcwCrmmYGtsG")
+                    .enabled(true)
+                    .gender(Gender.MAN)
+                    .nickname("Adam")
+                    .description("Chętnie wybiorę się na kawę lub przejażdżkę rowerową. Lubię spędzać aktywnie czas!")
+                    .dateOfBirth(LocalDate.of(1987, 12, 21))
+                    .preferredGenderToMeet(Collections.singletonList(Gender.WOMAN))
+                    .preferredAgeToMeetFrom((short) 30)
+                    .preferredAgeToMeetTo((short) 50)
+                    .contactData(contactDataRepository.save(ContactData.builder()
+                            .email("adam123@gmail.com")
+                            .build()
+                    ))
+                    .interests(Collections.singletonList(Interests.ART))
+                    .avatar(image2)
+                    .build()
+            );
+            //image3
+            Image image3 = addImage(3L, "justyna.jpg");
+            //user3
+            userRepository.save(User.builder()
+                    .id(3L)
+                    .username("justyna")
+                    .password("$2a$10$VnLSeqWqthL83OVxbOurEOqH0aOBh.0Q8JkPXQYaabcwCrmmYGtsG")
+                    .enabled(true)
+                    .gender(Gender.WOMAN)
+                    .nickname("Justyna")
+                    .description("Chętnie wybiorę się do kina lub kawiarni, żeby spędzić czas w miłym towarzystwie.")
+                    .dateOfBirth(LocalDate.of(1980, 12, 21))
+                    .preferredGenderToMeet(Collections.singletonList(Gender.WOMAN))
+                    .preferredAgeToMeetFrom((short) 30)
+                    .preferredAgeToMeetTo((short) 60)
+                    .contactData(contactDataRepository.save(ContactData.builder()
+                            .email("justyna123@gmail.com")
+                            .build()
+                    ))
+                    .interests(Collections.singletonList(Interests.ART))
+                    .avatar(image3)
+                    .build()
+            );
+            //image4
+            //Image image4 = addImage(4L, "justyna.jpg");
+            //user4
+            userRepository.save(User.builder()
+                    .id(4L)
+                    .username("kasia")
+                    .password("$2a$10$VnLSeqWqthL83OVxbOurEOqH0aOBh.0Q8JkPXQYaabcwCrmmYGtsG")
+                    .enabled(true)
+                    .gender(Gender.WOMAN)
+                    .nickname("Kasia")
+                    .description("Jestem fanką kreatywnego spędzania czasu i pozytywnego myślenia :D")
+                    .dateOfBirth(LocalDate.of(1998, 12, 21))
+                    .preferredGenderToMeet(Collections.singletonList(Gender.WOMAN))
+                    .preferredAgeToMeetFrom((short) 30)
+                    .preferredAgeToMeetTo((short) 60)
+                    .contactData(contactDataRepository.save(ContactData.builder()
+                            .email("kasia123@gmail.com")
+                            .build()
+                    ))
+                    .interests(Collections.singletonList(Interests.ART))
+                    //.avatar(image4)
+                    .build()
+            );
         }
-        //image2
-        Image image2 = addImage(2L, "adam.jpg");
-        //user2
-        userRepository.save(User.builder()
-                .id(2L)
-                .enabled(true)
-                .gender(Gender.MAN)
-                .nickname("Adam")
-                .description("Chętnie wybiorę się na kawę lub przejażdżkę rowerową. Lubię spędzać aktywnie czas!")
-                .dateOfBirth(LocalDate.of(1987, 12, 21))
-                .preferredGenderToMeet(Collections.singletonList(Gender.WOMAN))
-                .preferredAgeToMeetFrom((short) 30)
-                .preferredAgeToMeetTo((short) 50)
-                .contactData(contactDataRepository.save(ContactData.builder()
-                        .email("adam123@gmail.com")
-                        .build()
-                ))
-                .interests(Collections.singletonList(Interests.ART))
-                .avatar(image2)
-                .build()
-        );
-        //image3
-        Image image3 = addImage(3L, "justyna.jpg");
-        //user3
-        userRepository.save(User.builder()
-                .id(3L)
-                .enabled(true)
-                .gender(Gender.WOMAN)
-                .nickname("Justyna")
-                .description("Chętnie wybiorę się do kina lub kawiarni, żeby spędzić czas w miłym towarzystwie.")
-                .dateOfBirth(LocalDate.of(1980, 12, 21))
-                .preferredGenderToMeet(Collections.singletonList(Gender.WOMAN))
-                .preferredAgeToMeetFrom((short) 30)
-                .preferredAgeToMeetTo((short) 60)
-                .contactData(contactDataRepository.save(ContactData.builder()
-                        .email("justyna123@gmail.com")
-                        .build()
-                ))
-                .interests(Collections.singletonList(Interests.ART))
-                .avatar(image3)
-                .build()
-        );
-        //image4
-        //Image image4 = addImage(4L, "justyna.jpg");
-        //user4
-        userRepository.save(User.builder()
-                .id(4L)
-                .enabled(true)
-                .gender(Gender.WOMAN)
-                .nickname("Kasia")
-                .description("Jestem fanką kreatywnego spędzania czasu i pozytywnego myślenia :D")
-                .dateOfBirth(LocalDate.of(1998, 12, 21))
-                .preferredGenderToMeet(Collections.singletonList(Gender.WOMAN))
-                .preferredAgeToMeetFrom((short) 30)
-                .preferredAgeToMeetTo((short) 60)
-                .contactData(contactDataRepository.save(ContactData.builder()
-                        .email("kasia123@gmail.com")
-                        .build()
-                ))
-                .interests(Collections.singletonList(Interests.ART))
-                //.avatar(image4)
-                .build()
-        );
     }
 
     private Image addImage(Long imageId, String fileName) throws IOException {

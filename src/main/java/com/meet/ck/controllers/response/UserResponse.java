@@ -15,6 +15,7 @@ import java.util.List;
 public class UserResponse {
     private Long id;
     private String nickname;
+    private String username;
     private Short age;
     private String description;
     private ContactDataResponse contactData;

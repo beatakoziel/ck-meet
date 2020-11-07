@@ -3,13 +3,14 @@ package com.meet.ck.database.enums;
 public enum Interests {
     LANGUAGES,
     TRAVELLING,
+    AUTOMOTIVE,
     ART,
     COOKING,
     MUSIC,
+    DANCE,
     GYM,
     CYCLING,
     HIKING,
-    DANCING,
     BOARD_GAMES,
     MOVIES,
     PARTIES,
@@ -17,7 +18,7 @@ public enum Interests {
     WALKING,
     THEATER,
     TEAM_GAMES,
-    SINGING,
     READING,
-    OTHER_SPORTS
+    WINTER_SPORTS,
+    WATER_SPORTS
 }

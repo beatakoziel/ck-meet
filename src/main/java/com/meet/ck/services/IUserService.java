@@ -5,7 +5,9 @@ import com.meet.ck.database.entities.User;
 import java.util.List;
 
 public interface IUserService {
-    void createUser(User user);
+    void registerUser(User user);
+
+    void addUserData(User user);
 
     User getUserById(Long id);
 
