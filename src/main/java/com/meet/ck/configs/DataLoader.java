@@ -302,7 +302,7 @@ public class DataLoader implements ApplicationRunner {
                     .username("wiktor")
                     .password("$2a$10$VnLSeqWqthL83OVxbOurEOqH0aOBh.0Q8JkPXQYaabcwCrmmYGtsG")
                     .enabled(true)
-                    .gender(Gender.WOMAN)
+                    .gender(Gender.MAN)
                     .nickname("Wiktor")
                     .description("Szukam kompana do gry w szachy. Człowiek doświadczony.")
                     .dateOfBirth(LocalDate.of(1945, 12, 21))
@@ -315,6 +315,54 @@ public class DataLoader implements ApplicationRunner {
                     ))
                     .interests(Collections.singletonList(Interests.BOARD_GAMES))
                     .avatar(image12)
+                    .build()
+            );
+
+            //image13
+            //Image image13 = addImage(13L, "ola.jpg");
+            //user13
+            userRepository.save(User.builder()
+                    .id(13L)
+                    .username("ola")
+                    .password("$2a$10$VnLSeqWqthL83OVxbOurEOqH0aOBh.0Q8JkPXQYaabcwCrmmYGtsG")
+                    .enabled(true)
+                    .gender(Gender.WOMAN)
+                    .nickname("Ola")
+                    .description("Chętnie wybiorę się na wspinaczki górskie czy dłuuuuugie i ciężkie przejażdżki rowerowe.")
+                    .dateOfBirth(LocalDate.of(1996, 12, 21))
+                    .preferredGenderToMeet(Collections.singletonList(Gender.MAN))
+                    .preferredAgeToMeetFrom((short) 18)
+                    .preferredAgeToMeetTo((short) 30)
+                    .contactData(contactDataRepository.save(ContactData.builder()
+                            .email("ola123@gmail.com")
+                            .build()
+                    ))
+                    .interests(Collections.singletonList(Interests.HIKING))
+                    //.avatar(image13)
+                    .build()
+            );
+
+            //image13
+            Image image14 = addImage(14L, "agnieszka.jpg");
+            //user13
+            userRepository.save(User.builder()
+                    .id(14L)
+                    .username("agnieszka")
+                    .password("$2a$10$VnLSeqWqthL83OVxbOurEOqH0aOBh.0Q8JkPXQYaabcwCrmmYGtsG")
+                    .enabled(true)
+                    .gender(Gender.WOMAN)
+                    .nickname("Agnieszka")
+                    .description("Chcę wraz z przyjaciółką założyć koło śpiewu. Chętnych zapraszamy serdecznie. Pośpiewamy sobie")
+                    .dateOfBirth(LocalDate.of(1984, 12, 21))
+                    .preferredGenderToMeet(Collections.singletonList(Gender.MAN))
+                    .preferredAgeToMeetFrom((short) 18)
+                    .preferredAgeToMeetTo((short) 50)
+                    .contactData(contactDataRepository.save(ContactData.builder()
+                            .email("agnieszka123@gmail.com")
+                            .build()
+                    ))
+                    .interests(Collections.singletonList(Interests.HIKING))
+                    .avatar(image14)
                     .build()
             );
         }
