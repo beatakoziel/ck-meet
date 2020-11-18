@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 import static com.meet.ck.controllers.converters.UserConverter.userAuthToEntity;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
@@ -25,14 +25,16 @@ public class AuthController {
         return "hello";
     }
 
-    @PostMapping(value = "/signup", consumes = "application/json")
+    @CrossOrigin(origins = "http://localhost:8080")
+    @PostMapping(value = "/register", consumes = "application/json")
     public ResponseEntity<Void> registerUser(@Valid @RequestBody AuthRequest userRequest) {
         userService.registerUser(userAuthToEntity(userRequest));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping(value = "/login", consumes = "application/json")
-    public ResponseEntity<String> basicLogin(@RequestBody AuthRequest request) {
+    public ResponseEntity<String> basicLogin(@Valid @RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.basicLogin(request));
     }
 }

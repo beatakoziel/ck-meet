@@ -18,7 +18,7 @@ import static com.meet.ck.controllers.converters.UserConverter.requestToUpdate;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
 
     private final IUserService userService;

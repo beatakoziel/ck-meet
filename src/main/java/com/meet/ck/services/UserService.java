@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public List<User> getUsersList() {
-        return userRepository.findAll();
+        return userRepository.findAllByNicknameNotNull();
     }
 
     @Override
