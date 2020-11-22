@@ -1,8 +1,7 @@
 package com.meet.ck.controllers.response;
 
-import com.meet.ck.database.entities.Image;
 import com.meet.ck.database.enums.Gender;
-import com.meet.ck.database.enums.Interests;
+import com.meet.ck.database.enums.Interest;
 import lombok.*;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class UserResponse {
     private Short age;
     private String description;
     private ContactDataResponse contactData;
-    private List<Interests> interests;
+    private List<Interest> interests;
     private Gender gender;
     private List<Gender> preferredGenderToMeet;
     private Short preferredAgeToMeetFrom;

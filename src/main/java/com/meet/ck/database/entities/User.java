@@ -1,7 +1,8 @@
 package com.meet.ck.database.entities;
 
 import com.meet.ck.database.enums.Gender;
-import com.meet.ck.database.enums.Interests;
+import com.meet.ck.database.enums.Interest;
+import com.meet.ck.database.enums.RegistrationStatus;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,14 +46,17 @@ public class User implements UserDetails {
     private String description;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private ContactData contactData;
+    private ContactData contactData = new ContactData();
 
     @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = Interests.class)
-    private List<Interests> interests;
+    @ElementCollection(targetClass = Interest.class)
+    private List<Interest> interests;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    private RegistrationStatus status;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Gender.class)

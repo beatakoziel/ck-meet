@@ -1,11 +1,14 @@
 package com.meet.ck.controllers;
 
 import com.meet.ck.controllers.requests.AuthRequest;
+import com.meet.ck.database.entities.User;
+import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.services.AuthService;
 import com.meet.ck.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,11 +22,6 @@ public class AuthController {
 
     private final IUserService userService;
     private final AuthService authService;
-
-    @GetMapping("/test")
-    public String test() {
-        return "hello";
-    }
 
     @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping(value = "/register", consumes = "application/json")

@@ -1,9 +1,11 @@
 package com.meet.ck.controllers.converters;
 
 import com.meet.ck.controllers.requests.AuthRequest;
-import com.meet.ck.controllers.requests.UserRequest;
+import com.meet.ck.controllers.requests.PersonalDataRequest;
+import com.meet.ck.controllers.requests.PersonalizationDataRequest;
 import com.meet.ck.controllers.response.UserResponse;
 import com.meet.ck.database.entities.User;
+import com.meet.ck.database.enums.RegistrationStatus;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,11 +21,34 @@ public class UserConverter {
         return User.builder()
                 .username(request.getUsername())
                 .password(encoder.encode(request.getPassword()))
+                .status(RegistrationStatus.NOT_COMPLETED)
                 .enabled(true)
                 .build();
     }
 
-    public static User requestToUpdate(Long userId, UserRequest userRequest) {
+    public static User userPersonalDataToEntity(Long userId, PersonalDataRequest request) {
+        return User.builder()
+                .id(userId)
+                .nickname(request.getNickname())
+                .dateOfBirth(request.getDateOfBirth())
+                .description(request.getDescription())
+                .gender(request.getGender())
+                .status(RegistrationStatus.PERSONAL_DATA)
+                .build();
+    }
+
+    public static User personalizationDataToEntity(Long userId, PersonalizationDataRequest request) {
+        return User.builder()
+                .id(userId)
+                .interests(request.getInterests())
+                .preferredAgeToMeetFrom(request.getPreferredAgeToMeetFrom())
+                .preferredAgeToMeetTo(request.getPreferredAgeToMeetTo())
+                .preferredGenderToMeet(request.getPreferredGenderToMeet())
+                .status(RegistrationStatus.PERSONALIZATION)
+                .build();
+    }
+
+/*    public static User requestToUpdate(Long userId, PersonalDataRequest userRequest) {
         return User.builder()
                 .id(userId)
                 .contactData(ContactDataConverter.requestToEntity(userRequest.getContactData()))
@@ -37,7 +62,7 @@ public class UserConverter {
                 .preferredGenderToMeet(userRequest.getPreferredGenderToMeet())
                 .enabled(true)
                 .build();
-    }
+    }*/
 
     public static UserResponse entityToResponse(User user) {
         return UserResponse.builder()

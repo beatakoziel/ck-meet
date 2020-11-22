@@ -1,19 +1,20 @@
 package com.meet.ck.controllers;
 
 import com.meet.ck.controllers.converters.UserConverter;
-import com.meet.ck.controllers.requests.UserRequest;
+import com.meet.ck.controllers.requests.PersonalDataRequest;
 import com.meet.ck.controllers.response.UserResponse;
 import com.meet.ck.database.entities.User;
+import com.meet.ck.database.enums.Interest;
+import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
-import static com.meet.ck.controllers.converters.UserConverter.requestToUpdate;
 
 @RestController
 @RequestMapping("/users")
@@ -36,9 +37,17 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUser(@PathVariable Long userId, @Valid @RequestBody UserRequest userRequest) {
+/*    @PutMapping("/{userId}")
+    public ResponseEntity<Void> updateUser(@PathVariable Long userId, @Valid @RequestBody PersonalDataRequest userRequest) {
         userService.updateUser(requestToUpdate(userId, userRequest));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }*/
+
+
+    @PutMapping("/data")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public ResponseEntity<Void> registerUserPersonalData(Authentication auth, @RequestBody PersonalDataRequest request) {
+        userService.registerUserPersonalData(getUsernameFromAuthentication(auth), request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -52,6 +61,20 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/interests")
+    public ResponseEntity<List<Interest>> getAvailableInterests() {
+        return new ResponseEntity<>(userService.getAvailableInterests(), HttpStatus.OK);
+    }
+
+    @GetMapping("/status")
+    public RegistrationStatus status(Authentication authentication) {
+        return userService.getUserStatus(getUsernameFromAuthentication(authentication));
+    }
+
+    private String getUsernameFromAuthentication(Authentication authentication) {
+        return ((User) authentication.getPrincipal()).getUsername();
     }
 
 }
