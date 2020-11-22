@@ -15,12 +15,9 @@ public class ContactData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
     private String phoneNumber;
 
-    @Column(unique = true)
     private String linkToFacebookProfile;
 }

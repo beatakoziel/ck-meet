@@ -46,6 +46,7 @@ public class UserService implements UserDetailsService, IUserService {
         user.getContactData().setLinkToFacebookProfile(request.getLinkToFacebookProfile());
         user.getContactData().setPhoneNumber(request.getPhoneNumber());
         user.setGender(request.getGender());
+        user.setStatus(RegistrationStatus.PERSONAL_DATA);
         userRepository.save(user);
     }
 
