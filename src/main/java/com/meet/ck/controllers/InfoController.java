@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:8080")
 public class InfoController {
 
-    @GetMapping
+    @GetMapping("/interests")
     public ResponseEntity<List<InterestResponse>> getAvailableInterests() {
         List<InterestResponse> list = Arrays.stream(Interest.values())
                 .map(i -> new InterestResponse(i.toString(), i.getKey()))
