@@ -1,5 +1,6 @@
 package com.meet.ck.utilities;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +22,12 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler({})
-    ResponseEntity<ErrorMessage> handle500Error(HttpServletRequest req, Exception ex) {
-        return sendExceptionMessage(ex, HttpStatus.INTERNAL_SERVER_ERROR, req.getRequestURL().toString());
-    }
-
-    @ResponseBody
     @ExceptionHandler({EntityNotFoundException.class, NotFoundException.class})
     ResponseEntity<ErrorMessage> handle404Error(HttpServletRequest req, Exception ex) {
         return sendExceptionMessage(ex, HttpStatus.NOT_FOUND, req.getRequestURL().toString());
     }
 
-    @ExceptionHandler({AccessDeniedException.class})
+    @ExceptionHandler({AccessDeniedException.class, ExpiredJwtException.class})
     @ResponseBody
     ResponseEntity<ErrorMessage> handle401Error(HttpServletRequest req, Exception ex) {
         return sendExceptionMessage(ex, HttpStatus.UNAUTHORIZED, req.getRequestURL().toString());
@@ -42,6 +37,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({AlreadyExistsException.class})
     ResponseEntity<ErrorMessage> handle400Error(HttpServletRequest req, Exception ex) {
         return sendExceptionMessage(ex, HttpStatus.BAD_REQUEST, req.getRequestURL().toString());
+    }
+
+    @ResponseBody
+    @ExceptionHandler({})
+    ResponseEntity<ErrorMessage> handle500Error(HttpServletRequest req, Exception ex) {
+        return sendExceptionMessage(ex, HttpStatus.INTERNAL_SERVER_ERROR, req.getRequestURL().toString());
     }
 
 }

@@ -12,6 +12,8 @@ public interface IUserService {
 
     void registerUserPersonalData(String usernameFromAuthentication, PersonalDataRequest request);
 
+    User getUserByUsername(String username);
+
     void addUserData(User user);
 
     User getUserById(Long id);
