@@ -2,6 +2,7 @@ package com.meet.ck.controllers;
 
 import com.meet.ck.controllers.converters.UserConverter;
 import com.meet.ck.controllers.requests.PersonalDataRequest;
+import com.meet.ck.controllers.requests.PersonalizationDataRequest;
 import com.meet.ck.controllers.response.UserResponse;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.database.enums.Interest;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class UserController {
 
     @GetMapping("/current")
     public ResponseEntity<String> getUCurrentUserName(Authentication authentication) {
-        return new ResponseEntity<>(getUsernameFromAuthentication(authentication), HttpStatus.OK);
+        return new ResponseEntity<>(getUsernameFromAuth(authentication), HttpStatus.OK);
     }
 
 /*    @PutMapping("/{userId}")
@@ -47,11 +49,21 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }*/
 
+    @PostMapping(value = "/avatar")
+    public ResponseEntity<Void> uploadImage(Authentication auth, @RequestParam("image") MultipartFile file) {
+        userService.uploadImage(getUsernameFromAuth(auth), file);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PutMapping("/data")
-    @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<Void> registerUserPersonalData(Authentication auth, @RequestBody PersonalDataRequest request) {
-        userService.registerUserPersonalData(getUsernameFromAuthentication(auth), request);
+        userService.registerUserPersonalData(getUsernameFromAuth(auth), request);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/personalization")
+    public ResponseEntity<Void> registerUserPersonalizationData(Authentication auth, @RequestBody PersonalizationDataRequest request) {
+        userService.registerUserPersonalizationData(getUsernameFromAuth(auth), request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -74,10 +86,10 @@ public class UserController {
 
     @GetMapping("/status")
     public RegistrationStatus status(Authentication authentication) {
-        return userService.getUserStatus(getUsernameFromAuthentication(authentication));
+        return userService.getUserStatus(getUsernameFromAuth(authentication));
     }
 
-    private String getUsernameFromAuthentication(Authentication authentication) {
+    private String getUsernameFromAuth(Authentication authentication) {
         return ((User) authentication.getPrincipal()).getUsername();
     }
 

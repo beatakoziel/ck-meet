@@ -1,6 +1,7 @@
 package com.meet.ck.controllers;
 
 import com.meet.ck.controllers.requests.AuthRequest;
+import com.meet.ck.controllers.response.AuthResponse;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.services.AuthService;
@@ -32,7 +33,7 @@ public class AuthController {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping(value = "/login", consumes = "application/json")
-    public ResponseEntity<String> basicLogin(@Valid @RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse> basicLogin(@Valid @RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.basicLogin(request));
     }
 }

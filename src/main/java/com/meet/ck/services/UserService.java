@@ -1,19 +1,25 @@
 package com.meet.ck.services;
 
 import com.meet.ck.controllers.requests.PersonalDataRequest;
+import com.meet.ck.controllers.requests.PersonalizationDataRequest;
 import com.meet.ck.database.entities.ContactData;
+import com.meet.ck.database.entities.Image;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.database.enums.Interest;
 import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.database.repositories.IContactDataRepository;
+import com.meet.ck.database.repositories.IImageRepository;
 import com.meet.ck.database.repositories.IUserRepository;
 import com.meet.ck.utilities.AlreadyExistsException;
+import com.meet.ck.utilities.ImageUploadException;
 import com.meet.ck.utilities.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +28,7 @@ import java.util.List;
 public class UserService implements UserDetailsService, IUserService {
 
     private final IUserRepository userRepository;
+    private final IImageRepository imageRepository;
     private final IContactDataRepository contactDataRepository;
 
     @Override
@@ -46,7 +53,20 @@ public class UserService implements UserDetailsService, IUserService {
         user.getContactData().setLinkToFacebookProfile(request.getLinkToFacebookProfile());
         user.getContactData().setPhoneNumber(request.getPhoneNumber());
         user.setGender(request.getGender());
-        user.setStatus(RegistrationStatus.PERSONAL_DATA);
+        if(user.getStatus()==RegistrationStatus.NOT_COMPLETED)
+            user.setStatus(RegistrationStatus.PERSONAL_DATA);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void registerUserPersonalizationData(String username, PersonalizationDataRequest request) {
+        User user = getUserByUsername(username);
+        user.setInterests(request.getInterests());
+        user.setPreferredGenderToMeet(request.getPreferredGenderToMeet());
+        user.setPreferredAgeToMeetFrom(request.getPreferredAgeToMeetFrom());
+        user.setPreferredAgeToMeetTo(request.getPreferredAgeToMeetTo());
+        if(user.getStatus()==RegistrationStatus.PERSONAL_DATA)
+            user.setStatus(RegistrationStatus.PERSONALIZATION);
         userRepository.save(user);
     }
 
@@ -97,6 +117,26 @@ public class UserService implements UserDetailsService, IUserService {
     @Override
     public List<Interest> getAvailableInterests() {
         return Arrays.asList(Interest.values());
+    }
+
+    @Override
+    public void uploadImage(String username, MultipartFile file) {
+        User user = getUserByUsername(username);
+        Image image = null;
+        try {
+             image = Image.builder()
+                    .name(file.getName())
+                    .data(file.getBytes())
+                    .type(file.getContentType())
+                    .build();
+        } catch (IOException e) {
+            throw new ImageUploadException();
+        }
+        image = imageRepository.save(image);
+        user.setAvatar(image);
+        if(user.getStatus()==RegistrationStatus.PERSONALIZATION)
+            user.setStatus(RegistrationStatus.COMPLETED);
+        userRepository.save(user);
     }
 
     public User getUserByUsername(String username) {

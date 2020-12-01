@@ -2,6 +2,8 @@ package com.meet.ck.services;
 
 import com.meet.ck.configs.jwt.JwtUtil;
 import com.meet.ck.controllers.requests.AuthRequest;
+import com.meet.ck.controllers.response.AuthResponse;
+import com.meet.ck.database.enums.RegistrationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,7 +20,7 @@ public class AuthService {
     private final UserService userService;
     private final JwtUtil jwtTokenUtil;
 
-    public String basicLogin(@RequestBody AuthRequest request) {
+    public AuthResponse basicLogin(@RequestBody AuthRequest request) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
@@ -27,7 +29,12 @@ public class AuthService {
             throw new RuntimeException("Incorrect username or password", e);
         }
         final UserDetails userDetails = userService.loadUserByUsername(request.getUsername());
-        return jwtTokenUtil.generateToken(userDetails);
+        String token = jwtTokenUtil.generateToken(userDetails);
+        RegistrationStatus status = userService.getUserStatus(request.getUsername());
+        return AuthResponse.builder()
+                .status(status)
+                .token(token)
+                .build();
 
     }
 
