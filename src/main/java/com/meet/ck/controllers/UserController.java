@@ -38,9 +38,10 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
 
+
     @GetMapping("/current")
-    public ResponseEntity<String> getUCurrentUserName(Authentication authentication) {
-        return new ResponseEntity<>(getUsernameFromAuth(authentication), HttpStatus.OK);
+    public ResponseEntity<User> getUCurrentUser(Authentication authentication) {
+        return new ResponseEntity<>(userService.getUserByUsername(getUsernameFromAuth(authentication)), HttpStatus.OK);
     }
 
 /*    @PutMapping("/{userId}")
