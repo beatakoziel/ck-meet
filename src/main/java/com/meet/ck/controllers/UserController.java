@@ -28,7 +28,8 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers() {
         return new ResponseEntity(
-                userService.getUsersList().stream().map(UserConverter::entityToResponse),
+                userService.getUsersList().stream()
+                        .map(UserConverter::entityToResponse),
                 HttpStatus.OK
         );
     }
@@ -43,12 +44,6 @@ public class UserController {
     public ResponseEntity<User> getUCurrentUser(Authentication authentication) {
         return new ResponseEntity<>(userService.getUserByUsername(getUsernameFromAuth(authentication)), HttpStatus.OK);
     }
-
-/*    @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUser(@PathVariable Long userId, @Valid @RequestBody PersonalDataRequest userRequest) {
-        userService.updateUser(requestToUpdate(userId, userRequest));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/
 
     @PostMapping(value = "/avatar")
     public ResponseEntity<Void> uploadImage(Authentication auth, @RequestParam("image") MultipartFile file) {

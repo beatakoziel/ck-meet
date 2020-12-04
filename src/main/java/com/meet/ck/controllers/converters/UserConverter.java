@@ -3,6 +3,7 @@ package com.meet.ck.controllers.converters;
 import com.meet.ck.controllers.requests.AuthRequest;
 import com.meet.ck.controllers.requests.PersonalDataRequest;
 import com.meet.ck.controllers.requests.PersonalizationDataRequest;
+import com.meet.ck.controllers.response.MeetingParticipantResponse;
 import com.meet.ck.controllers.response.UserResponse;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.database.enums.RegistrationStatus;
@@ -26,7 +27,15 @@ public class UserConverter {
                 .build();
     }
 
-    public static User userPersonalDataToEntity(Long userId, PersonalDataRequest request) {
+    public static MeetingParticipantResponse entityUserToMeetingParticipant(User entity) {
+        return MeetingParticipantResponse.builder()
+                .id(entity.getId())
+                .nickname(entity.getNickname())
+                .avatarBytes(entity.getAvatar() != null ? entity.getAvatar().getData() : null)
+                .build();
+    }
+
+    public static User entityUserToMeetingParticipant(Long userId, PersonalDataRequest request) {
         return User.builder()
                 .id(userId)
                 .nickname(request.getNickname())
@@ -47,22 +56,6 @@ public class UserConverter {
                 .status(RegistrationStatus.PERSONALIZATION)
                 .build();
     }
-
-/*    public static User requestToUpdate(Long userId, PersonalDataRequest userRequest) {
-        return User.builder()
-                .id(userId)
-                .contactData(ContactDataConverter.requestToEntity(userRequest.getContactData()))
-                .dateOfBirth(userRequest.getDateOfBirth())
-                .description(userRequest.getDescription())
-                .gender(userRequest.getGender())
-                .interests(userRequest.getInterests())
-                .nickname(userRequest.getNickname())
-                .preferredAgeToMeetFrom(userRequest.getPreferredAgeToMeetFrom())
-                .preferredAgeToMeetTo(userRequest.getPreferredAgeToMeetTo())
-                .preferredGenderToMeet(userRequest.getPreferredGenderToMeet())
-                .enabled(true)
-                .build();
-    }*/
 
     public static UserResponse entityToResponse(User user) {
         return UserResponse.builder()
