@@ -6,12 +6,13 @@ public enum MeetingCategory {
     FOOD("Jedzenie"),
     BOARD_GAMES("Gry planszowe"),
     CINEMA("Kino"),
-    PARTY("Impreza"),
+    PARTY("Imprezy"),
     COFFEE_OR_TEA("Kawa lub herbata"),
-    ALCOHOL("Alkohol"),
+    ALCOHOL("Wyjście na alkohol"),
     TALK("Rozmowa"),
     THEATER("Teatr lub komedia"),
     ACTIVITY("Aktywność fizyczna"),
+    TEAM_SPORT("Sporty zespołowe"),
     OTHER("Coś innego"),
     ANYTHING("Wszystko jedno");
 

@@ -1,5 +1,6 @@
 package com.meet.ck.controllers.response;
 
+import com.meet.ck.controllers.EnumResponse;
 import com.meet.ck.database.entities.Comment;
 import com.meet.ck.database.entities.Image;
 import com.meet.ck.database.entities.User;
@@ -27,6 +28,6 @@ public class MeetingResponse {
     private int maxNumOfParticipants;
     private MeetingParticipantResponse host;
     private List<MeetingParticipantResponse> participants;
-    private String category;
+    private EnumResponse category;
     private List<CommentResponse> comments;
 }

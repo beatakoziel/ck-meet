@@ -1,5 +1,6 @@
 package com.meet.ck.controllers.converters;
 
+import com.meet.ck.controllers.EnumResponse;
 import com.meet.ck.controllers.requests.AuthRequest;
 import com.meet.ck.controllers.requests.PersonalDataRequest;
 import com.meet.ck.controllers.requests.PersonalizationDataRequest;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 public class UserConverter {
@@ -64,7 +66,10 @@ public class UserConverter {
                 .age((short) Period.between(user.getDateOfBirth(), LocalDate.now()).getYears())
                 .description(user.getDescription())
                 .gender(user.getGender())
-                .interests(user.getInterests())
+                .interests(user.getInterests()
+                        .stream()
+                        .map(interest -> new EnumResponse(interest.name(), interest.getKey(), interest.getIconName()))
+                        .collect(Collectors.toList()))
                 .nickname(user.getNickname())
                 .username(user.getUsername())
                 .preferredAgeToMeetFrom(user.getPreferredAgeToMeetFrom())

@@ -1,5 +1,6 @@
 package com.meet.ck.controllers.converters;
 
+import com.meet.ck.controllers.EnumResponse;
 import com.meet.ck.controllers.requests.MeetingRequest;
 import com.meet.ck.controllers.response.MeetingResponse;
 import com.meet.ck.database.entities.Meeting;
@@ -36,11 +37,11 @@ public class MeetingConverter {
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
-                .cover(entity.getCover()!=null? entity.getCover().getData() : null)
-                .date(entity.getDate()!=null? entity.getDate().toString(): null)
+                .cover(entity.getCover() != null ? entity.getCover().getData() : null)
+                .date(entity.getDate() != null ? entity.getDate().toString() : null)
                 .maxNumOfParticipants(entity.getMaxNumOfParticipants())
                 .host(UserConverter.entityUserToMeetingParticipant(entity.getHost()))
-                .category(entity.getCategory()!=null? entity.getCategory().getKey(): null)
+                .category(entity.getCategory() != null ? new EnumResponse(entity.getCategory().name(), entity.getCategory().getKey(), null) : null)
                 .participants(entity.getParticipants()
                         .stream()
                         .map(UserConverter::entityUserToMeetingParticipant)

@@ -75,11 +75,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/interests")
-    public ResponseEntity<List<Interest>> getAvailableInterests() {
-        return new ResponseEntity<>(userService.getAvailableInterests(), HttpStatus.OK);
-    }
-
     @GetMapping("/status")
     public RegistrationStatus status(Authentication authentication) {
         return userService.getUserStatus(getUsernameFromAuth(authentication));
