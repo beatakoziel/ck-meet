@@ -41,13 +41,13 @@ public class MeetingController {
     @PutMapping("/{meetingId}")
     public ResponseEntity<Void> editMeeting(@PathVariable("meetingId") Long meetingId,  @RequestBody MeetingRequest request) {
         meetingService.editMeeting(meetingId, meetingToEntity(request));
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("/{meetingId}")
     public ResponseEntity<Void> editMeeting(@PathVariable("meetingId") Long meetingId) {
         meetingService.removeMeeting(meetingId);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     private String getUsernameFromAuth(Authentication authentication) {
