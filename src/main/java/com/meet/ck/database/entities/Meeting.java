@@ -29,9 +29,6 @@ public class Meeting {
     @Column(length = 500)
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Image cover;
-
     private LocalDate date;
 
     private int maxNumOfParticipants;

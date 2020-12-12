@@ -25,6 +25,15 @@ public class RelationshipService {
         return list;
     }
 
+    public Relationship getUserRelationWithUser(String loggedUserUsername, String username) {
+        return relationshipRepository.findAll().stream()
+                .filter(relationship -> relationship.getUserWhoSaidHelloFirst().getUsername().equals(loggedUserUsername) && relationship.getUserWhoSaidHelloSecond().getUsername().equals(username) ||
+                        (relationship.getUserWhoSaidHelloSecond().getUsername().equals(loggedUserUsername) && relationship.getUserWhoSaidHelloFirst().getUsername().equals(username)))
+                .findFirst()
+                .orElse(null);
+
+    }
+
     public RelationStatus sayHello(String username, Long id) {
         Optional<Relationship> relationshipOptional = relationshipRepository.findAll().stream()
                 .filter(relationship -> (relationship.getUserWhoSaidHelloFirst().getUsername().equals(username)

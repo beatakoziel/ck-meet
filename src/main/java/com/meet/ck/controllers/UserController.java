@@ -1,13 +1,12 @@
 package com.meet.ck.controllers;
 
-import com.meet.ck.controllers.converters.UserConverter;
 import com.meet.ck.controllers.requests.PersonalDataRequest;
 import com.meet.ck.controllers.requests.PersonalizationDataRequest;
 import com.meet.ck.controllers.response.UserResponse;
 import com.meet.ck.database.entities.User;
-import com.meet.ck.database.enums.Interest;
 import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.services.IUserService;
+import com.meet.ck.services.RelationshipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static com.meet.ck.controllers.converters.UserConverter.entityToResponse;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -24,12 +25,15 @@ import java.util.List;
 public class UserController {
 
     private final IUserService userService;
+    private final RelationshipService relationshipService;
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getUsers() {
+    public ResponseEntity<List<UserResponse>> getUsers(Authentication authentication) {
+        String username = getUsernameFromAuth(authentication);
         return new ResponseEntity(
                 userService.getUsersList().stream()
-                        .map(UserConverter::entityToResponse),
+                        .map(user -> entityToResponse(user,
+                                relationshipService.getUserRelationWithUser(username, user.getUsername()))),
                 HttpStatus.OK
         );
     }

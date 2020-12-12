@@ -37,7 +37,6 @@ public class MeetingConverter {
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
-                .cover(entity.getCover() != null ? entity.getCover().getData() : null)
                 .date(entity.getDate() != null ? entity.getDate().toString() : null)
                 .maxNumOfParticipants(entity.getMaxNumOfParticipants())
                 .host(UserConverter.entityUserToMeetingParticipant(entity.getHost()))

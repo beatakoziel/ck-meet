@@ -6,8 +6,10 @@ import com.meet.ck.controllers.requests.PersonalDataRequest;
 import com.meet.ck.controllers.requests.PersonalizationDataRequest;
 import com.meet.ck.controllers.response.MeetingParticipantResponse;
 import com.meet.ck.controllers.response.UserResponse;
+import com.meet.ck.database.entities.Relationship;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.database.enums.RegistrationStatus;
+import com.meet.ck.database.enums.RelationStatus;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -59,7 +61,7 @@ public class UserConverter {
                 .build();
     }
 
-    public static UserResponse entityToResponse(User user) {
+    public static UserResponse entityToResponse(User user, Relationship relationship) {
         return UserResponse.builder()
                 .id(user.getId())
                 .contactData(ContactDataConverter.entityToResponse(user.getContactData()))
@@ -76,6 +78,7 @@ public class UserConverter {
                 .preferredAgeToMeetTo(user.getPreferredAgeToMeetTo())
                 .preferredGenderToMeet(user.getPreferredGenderToMeet())
                 .avatarBytes(user.getAvatar() == null ? null : user.getAvatar().getData())
+                .status(relationship == null ? null : relationship.getStatus())
                 .build();
     }
 }
