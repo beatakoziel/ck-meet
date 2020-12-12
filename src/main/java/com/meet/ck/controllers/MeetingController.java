@@ -44,6 +44,12 @@ public class MeetingController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{meetingId}")
+    public ResponseEntity<Void> editMeeting(@PathVariable("meetingId") Long meetingId) {
+        meetingService.removeMeeting(meetingId);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
     private String getUsernameFromAuth(Authentication authentication) {
         return ((User) authentication.getPrincipal()).getUsername();
     }
