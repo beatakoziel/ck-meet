@@ -38,6 +38,12 @@ public class MeetingController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @PutMapping("/{meetingId}")
+    public ResponseEntity<Void> editMeeting(@PathVariable("meetingId") Long meetingId,  @RequestBody MeetingRequest request) {
+        meetingService.editMeeting(meetingId, meetingToEntity(request));
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
     private String getUsernameFromAuth(Authentication authentication) {
         return ((User) authentication.getPrincipal()).getUsername();
     }

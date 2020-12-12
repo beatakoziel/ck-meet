@@ -42,6 +42,6 @@ public class Meeting {
     @Enumerated(EnumType.STRING)
     private MeetingCategory category;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     private List<Comment> comments;
 }
