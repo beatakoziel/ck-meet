@@ -3,6 +3,7 @@ package com.meet.ck.controllers;
 import com.meet.ck.controllers.converters.MeetingConverter;
 import com.meet.ck.controllers.requests.MeetingRequest;
 import com.meet.ck.controllers.response.MeetingResponse;
+import com.meet.ck.database.entities.Meeting;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.services.MeetingService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,20 @@ public class MeetingController {
     public ResponseEntity<Void> addMeeting(Authentication authentication, @RequestBody MeetingRequest request) {
         meetingService.addMeeting(getUsernameFromAuth(authentication), meetingToEntity(request));
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{meetingId}/participate")
+    public ResponseEntity<MeetingResponse> participateInMeeting(@PathVariable("meetingId") Long meetingId, Authentication authentication) {
+        MeetingResponse meetingResponse =
+                MeetingConverter.meetingEntityToResponse(meetingService.participateInMeeting(meetingId, getUsernameFromAuth(authentication)));
+        return new ResponseEntity(meetingResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/{meetingId}/cancel")
+    public ResponseEntity<MeetingResponse> cancelParticipationInMeeting(@PathVariable("meetingId") Long meetingId, Authentication authentication) {
+        MeetingResponse meetingResponse =
+                MeetingConverter.meetingEntityToResponse(meetingService.cancelParticipationInMeeting(meetingId, getUsernameFromAuth(authentication)));
+        return new ResponseEntity(meetingResponse, HttpStatus.OK);
     }
 
     @PutMapping("/{meetingId}")

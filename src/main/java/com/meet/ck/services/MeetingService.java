@@ -1,6 +1,7 @@
 package com.meet.ck.services;
 
 import com.meet.ck.database.entities.Meeting;
+import com.meet.ck.database.entities.User;
 import com.meet.ck.database.repositories.IMeetingRepository;
 import com.meet.ck.utilities.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,20 @@ public class MeetingService {
     public void removeMeeting(Long meetingId) {
         Meeting meeting = findMeetingById(meetingId);
         meetingRepository.delete(meeting);
+    }
+
+    public Meeting participateInMeeting(Long meetingId, String username) {
+        User user = userService.getUserByUsername(username);
+        Meeting meeting = findMeetingById(meetingId);
+        meeting.getParticipants().add(user);
+        meetingRepository.save(meeting);
+        return meeting;
+    }
+
+    public Meeting cancelParticipationInMeeting(Long meetingId, String username) {
+        Meeting meeting = findMeetingById(meetingId);
+        meeting.getParticipants().removeIf((user -> user.getUsername().equals(username)));
+        meetingRepository.save(meeting);
+        return meeting;
     }
 }
