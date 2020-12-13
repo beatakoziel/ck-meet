@@ -3,7 +3,6 @@ package com.meet.ck.controllers;
 import com.meet.ck.controllers.converters.MeetingConverter;
 import com.meet.ck.controllers.requests.MeetingRequest;
 import com.meet.ck.controllers.response.MeetingResponse;
-import com.meet.ck.database.entities.Meeting;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.services.MeetingService;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +53,7 @@ public class MeetingController {
     }
 
     @PutMapping("/{meetingId}")
-    public ResponseEntity<Void> editMeeting(@PathVariable("meetingId") Long meetingId,  @RequestBody MeetingRequest request) {
+    public ResponseEntity<Void> editMeeting(@PathVariable("meetingId") Long meetingId, @RequestBody MeetingRequest request) {
         meetingService.editMeeting(meetingId, meetingToEntity(request));
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -62,6 +61,18 @@ public class MeetingController {
     @DeleteMapping("/{meetingId}")
     public ResponseEntity<Void> editMeeting(@PathVariable("meetingId") Long meetingId) {
         meetingService.removeMeeting(meetingId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/{meetingId}/comment")
+    public ResponseEntity<Void> addComment(Authentication authentication, @PathVariable("meetingId") Long meetingId, @RequestBody String content) {
+        meetingService.addComment(meetingId, getUsernameFromAuth(authentication), content);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{meetingId}/comment/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable("meetingId") Long meetingId, @PathVariable("commentId") Long commentId) {
+        meetingService.deleteComment(meetingId, commentId);
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -1,5 +1,6 @@
 package com.meet.ck.services;
 
+import com.meet.ck.database.entities.Comment;
 import com.meet.ck.database.entities.Meeting;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.database.repositories.IMeetingRepository;
@@ -58,5 +59,24 @@ public class MeetingService {
         meeting.getParticipants().removeIf((user -> user.getUsername().equals(username)));
         meetingRepository.save(meeting);
         return meeting;
+    }
+
+    public List<Comment> addComment(Long meetingId, String username, String content) {
+        Meeting meeting = findMeetingById(meetingId);
+        User user = userService.getUserByUsername(username);
+        Comment comment = Comment.builder()
+                .content(content)
+                .commentator(user)
+                .build();
+        meeting.getComments().add(comment);
+        meetingRepository.save(meeting);
+        return meeting.getComments();
+    }
+
+    public List<Comment> deleteComment(Long meetingId, Long commentId) {
+        Meeting meeting = findMeetingById(meetingId);
+        meeting.getComments().removeIf(comment -> comment.getId().equals(commentId));
+        meetingRepository.save(meeting);
+        return meeting.getComments();
     }
 }
