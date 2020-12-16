@@ -1,6 +1,7 @@
 package com.meet.ck.controllers;
 
 import com.meet.ck.database.enums.Interest;
+import com.meet.ck.database.enums.MeetingCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,17 @@ import java.util.stream.Collectors;
 public class InfoController {
 
     @GetMapping("/interests")
-    public ResponseEntity<List<InterestResponse>> getAvailableInterests() {
-        List<InterestResponse> list = Arrays.stream(Interest.values())
-                .map(i -> new InterestResponse(i.toString(), i.getKey()))
+    public ResponseEntity<List<EnumResponse>> getAvailableInterests() {
+        List<EnumResponse> list = Arrays.stream(Interest.values())
+                .map(i -> new EnumResponse(i.toString(), i.getKey(), i.getIconName()))
+                .collect(Collectors.toList());
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<EnumResponse>> getAvailableCategories() {
+        List<EnumResponse> list = Arrays.stream(MeetingCategory.values())
+                .map(i -> new EnumResponse(i.toString(), i.getKey(), null))
                 .collect(Collectors.toList());
         return new ResponseEntity(list, HttpStatus.OK);
     }

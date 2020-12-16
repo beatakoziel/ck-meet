@@ -115,11 +115,6 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public List<Interest> getAvailableInterests() {
-        return Arrays.asList(Interest.values());
-    }
-
-    @Override
     public void uploadImage(String username, MultipartFile file) {
         User user = getUserByUsername(username);
         Image image = null;

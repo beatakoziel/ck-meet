@@ -1,13 +1,12 @@
 package com.meet.ck.controllers;
 
-import com.meet.ck.controllers.converters.UserConverter;
 import com.meet.ck.controllers.requests.PersonalDataRequest;
 import com.meet.ck.controllers.requests.PersonalizationDataRequest;
 import com.meet.ck.controllers.response.UserResponse;
 import com.meet.ck.database.entities.User;
-import com.meet.ck.database.enums.Interest;
 import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.services.IUserService;
+import com.meet.ck.services.RelationshipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static com.meet.ck.controllers.converters.UserConverter.entityToResponse;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -24,11 +25,15 @@ import java.util.List;
 public class UserController {
 
     private final IUserService userService;
+    private final RelationshipService relationshipService;
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getUsers() {
+    public ResponseEntity<List<UserResponse>> getUsers(Authentication authentication) {
+        String username = getUsernameFromAuth(authentication);
         return new ResponseEntity(
-                userService.getUsersList().stream().map(UserConverter::entityToResponse),
+                userService.getUsersList().stream()
+                        .map(user -> entityToResponse(user,
+                                relationshipService.getUserRelationWithUser(username, user.getUsername()))),
                 HttpStatus.OK
         );
     }
@@ -38,16 +43,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/current")
-    public ResponseEntity<String> getUCurrentUserName(Authentication authentication) {
-        return new ResponseEntity<>(getUsernameFromAuth(authentication), HttpStatus.OK);
-    }
 
-/*    @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUser(@PathVariable Long userId, @Valid @RequestBody PersonalDataRequest userRequest) {
-        userService.updateUser(requestToUpdate(userId, userRequest));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
+        return new ResponseEntity<>(userService.getUserByUsername(getUsernameFromAuth(authentication)), HttpStatus.OK);
+    }
 
     @PostMapping(value = "/avatar")
     public ResponseEntity<Void> uploadImage(Authentication auth, @RequestParam("image") MultipartFile file) {
@@ -77,11 +77,6 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/interests")
-    public ResponseEntity<List<Interest>> getAvailableInterests() {
-        return new ResponseEntity<>(userService.getAvailableInterests(), HttpStatus.OK);
     }
 
     @GetMapping("/status")

@@ -33,7 +33,5 @@ public interface IUserService {
 
     void updateUserEnabled(Long id, boolean enabled);
 
-    List<Interest> getAvailableInterests();
-
     void uploadImage(String username, MultipartFile file);
 }

@@ -1,14 +1,11 @@
 package com.meet.ck.configs;
 
-import com.meet.ck.database.entities.ContactData;
-import com.meet.ck.database.entities.Image;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.database.entities.*;
 import com.meet.ck.database.enums.Gender;
 import com.meet.ck.database.enums.Interest;
+import com.meet.ck.database.enums.MeetingCategory;
 import com.meet.ck.database.enums.RegistrationStatus;
-import com.meet.ck.database.repositories.IContactDataRepository;
-import com.meet.ck.database.repositories.IImageRepository;
-import com.meet.ck.database.repositories.IUserRepository;
+import com.meet.ck.database.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -24,15 +21,49 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class DataLoader implements ApplicationRunner {
 
-    public static final String IMAGES_PATH = "C:\\Users\\beata\\IdeaProjects\\ck\\src\\main\\resources\\images\\";
+    public static final String PEOPLE_IMAGES_PATH = "C:\\Users\\beata\\IdeaProjects\\ck\\src\\main\\resources\\images\\people\\";
+    public static final String MEETINGS_IMAGES_PATH = "C:\\Users\\beata\\IdeaProjects\\ck\\src\\main\\resources\\images\\meetings\\";
     private final IContactDataRepository contactDataRepository;
     private final IUserRepository userRepository;
+    private final IMeetingRepository meetingRepository;
+    private final ICommentRepository commentRepository;
     private final IImageRepository imageRepository;
 
     public void run(ApplicationArguments args) throws IOException {
+        initializeUserRepository();
+        initializeMeetingRepository();
+    }
+
+    private void initializeMeetingRepository() throws IOException {
+        if (meetingRepository.count() < 1) {
+            Image image15 = addMeetingImage(15L, "coffee.jpg");
+            meetingRepository.save(Meeting.builder()
+                    .id(1L)
+                    .name("Wyjście na kawę")
+                    .description("Usłyszałam ostatnio o kawiarnii Bosko w Kielcach. Chętnie wyjdę tam na kawę i jakieś ciacho.")
+                    .maxNumOfParticipants(2)
+                    .host(userRepository.findById(1L).get())
+                    .category(MeetingCategory.BOARD_GAMES)
+                    .build()
+            );
+            Image image16 = addMeetingImage(16L, "football.jpg");
+            meetingRepository.save(Meeting.builder()
+                    .id(2L)
+                    .name("Gra w piłkę nożną")
+                    .description("Kto chce pokopać w piłkę na boisku Staszica niech dołącza sobie do spotkania.")
+                    .date(LocalDate.now())
+                    .maxNumOfParticipants(12)
+                    .host(userRepository.findById(2L).get())
+                    .category(MeetingCategory.ACTIVITY)
+                    .build()
+            );
+        }
+    }
+
+    private void initializeUserRepository() throws IOException {
         if (userRepository.count() < 1) {
             //image1
-            Image image1 = addImage(1L, "ania.jpg");
+            Image image1 = addUserImage(1L, "ania.jpg");
             //user1
             userRepository.save(User.builder()
                     .id(1L)
@@ -58,7 +89,7 @@ public class DataLoader implements ApplicationRunner {
             );
 
             //image2
-            Image image2 = addImage(2L, "adam.jpg");
+            Image image2 = addUserImage(2L, "adam.jpg");
             //user2
             userRepository.save(User.builder()
                     .id(2L)
@@ -82,7 +113,7 @@ public class DataLoader implements ApplicationRunner {
                     .build()
             );
             //image3
-            Image image3 = addImage(3L, "julka.jpg");
+            Image image3 = addUserImage(3L, "julka.jpg");
             //user3
             userRepository.save(User.builder()
                     .id(3L)
@@ -131,7 +162,7 @@ public class DataLoader implements ApplicationRunner {
             );
 
             //image5
-            Image image5 = addImage(5L, "tomek.jpg");
+            Image image5 = addUserImage(5L, "tomek.jpg");
             //user5
             userRepository.save(User.builder()
                     .id(5L)
@@ -156,7 +187,7 @@ public class DataLoader implements ApplicationRunner {
             );
 
             //image6
-            Image image6 = addImage(6L, "marek.jpg");
+            Image image6 = addUserImage(6L, "marek.jpg");
             //user6
             userRepository.save(User.builder()
                     .id(6L)
@@ -181,7 +212,7 @@ public class DataLoader implements ApplicationRunner {
             );
 
             //image7
-            Image image7 = addImage(7L, "ela.jpg");
+            Image image7 = addUserImage(7L, "ela.jpg");
             //user7
             userRepository.save(User.builder()
                     .id(7L)
@@ -231,7 +262,7 @@ public class DataLoader implements ApplicationRunner {
             );
 
             //image9
-            Image image9 = addImage(9L, "jacek.jpg");
+            Image image9 = addUserImage(9L, "jacek.jpg");
             //user9
             userRepository.save(User.builder()
                     .id(9L)
@@ -256,7 +287,7 @@ public class DataLoader implements ApplicationRunner {
             );
 
             //image10
-            Image image10 = addImage(10L, "hanna.jpg");
+            Image image10 = addUserImage(10L, "hanna.jpg");
             //user10
             userRepository.save(User.builder()
                     .id(10L)
@@ -281,7 +312,7 @@ public class DataLoader implements ApplicationRunner {
             );
 
             //image11
-            Image image11 = addImage(11L, "justyna.jpg");
+            Image image11 = addUserImage(11L, "justyna.jpg");
             //user11
             userRepository.save(User.builder()
                     .id(11L)
@@ -306,7 +337,7 @@ public class DataLoader implements ApplicationRunner {
             );
 
             //image12
-            Image image12 = addImage(12L, "wiktor.jpg");
+            Image image12 = addUserImage(12L, "wiktor.jpg");
             //user12
             userRepository.save(User.builder()
                     .id(12L)
@@ -355,9 +386,9 @@ public class DataLoader implements ApplicationRunner {
                     .build()
             );
 
-            //image13
-            Image image14 = addImage(14L, "agnieszka.jpg");
-            //user13
+            //image14
+            Image image14 = addUserImage(14L, "agnieszka.jpg");
+            //user14
             userRepository.save(User.builder()
                     .id(14L)
                     .username("agnieszka")
@@ -382,12 +413,22 @@ public class DataLoader implements ApplicationRunner {
         }
     }
 
-    private Image addImage(Long imageId, String fileName) throws IOException {
+    private Image addUserImage(Long imageId, String fileName) throws IOException {
         return imageRepository.save(Image.builder()
                 .id(imageId)
                 .name(fileName)
                 .type("image/jpeg")
-                .data(Files.readAllBytes(Paths.get(IMAGES_PATH + fileName)))
+                .data(Files.readAllBytes(Paths.get(PEOPLE_IMAGES_PATH + fileName)))
+                .build()
+        );
+    }
+
+    private Image addMeetingImage(Long imageId, String fileName) throws IOException {
+        return imageRepository.save(Image.builder()
+                .id(imageId)
+                .name(fileName)
+                .type("image/jpeg")
+                .data(Files.readAllBytes(Paths.get(MEETINGS_IMAGES_PATH + fileName)))
                 .build()
         );
     }

@@ -7,7 +7,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InterestResponse {
+public class EnumResponse {
     private String key;
     private String value;
+    private String iconName;
 }
