@@ -61,6 +61,27 @@ public class UserConverter {
                 .build();
     }
 
+    public static UserResponse loggedUserToResponse(User user) {
+        System.out.println(user.getDateOfBirth().getYear());
+        return UserResponse.builder()
+                .id(user.getId())
+                .contactData(ContactDataConverter.entityToResponse(user.getContactData()))
+                .dateOfBirth(user.getDateOfBirth().getYear() + "-" + user.getDateOfBirth().getMonthValue() + "-" + user.getDateOfBirth().getDayOfMonth())
+                .description(user.getDescription())
+                .gender(user.getGender())
+                .interests(user.getInterests()
+                        .stream()
+                        .map(interest -> new EnumResponse(interest.name(), interest.getKey(), interest.getIconName()))
+                        .collect(Collectors.toList()))
+                .nickname(user.getNickname())
+                .username(user.getUsername())
+                .preferredAgeToMeetFrom(user.getPreferredAgeToMeetFrom())
+                .preferredAgeToMeetTo(user.getPreferredAgeToMeetTo())
+                .preferredGenderToMeet(user.getPreferredGenderToMeet())
+                .avatarBytes(user.getAvatar() == null ? null : user.getAvatar().getData())
+                .build();
+    }
+
     public static UserResponse entityToResponse(User user, Relationship relationship) {
         return UserResponse.builder()
                 .id(user.getId())

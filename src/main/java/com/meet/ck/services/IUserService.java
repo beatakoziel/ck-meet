@@ -19,6 +19,8 @@ public interface IUserService {
 
     User getUserByUsername(String username);
 
+    void deleteAccount(String username);
+
     void addUserData(User user);
 
     User getUserById(Long id);

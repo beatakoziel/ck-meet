@@ -1,5 +1,6 @@
 package com.meet.ck.controllers;
 
+import com.meet.ck.controllers.converters.UserConverter;
 import com.meet.ck.controllers.requests.PersonalDataRequest;
 import com.meet.ck.controllers.requests.PersonalizationDataRequest;
 import com.meet.ck.controllers.response.UserResponse;
@@ -45,8 +46,9 @@ public class UserController {
 
 
     @GetMapping("/current")
-    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
-        return new ResponseEntity<>(userService.getUserByUsername(getUsernameFromAuth(authentication)), HttpStatus.OK);
+    public ResponseEntity<UserResponse> getCurrentUser(Authentication authentication) {
+        UserResponse userResponse = UserConverter.loggedUserToResponse(userService.getUserByUsername(getUsernameFromAuth(authentication)));
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @PostMapping(value = "/avatar")
@@ -76,6 +78,12 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<Void> deleteAccount(Authentication auth) {
+        userService.deleteAccount(getUsernameFromAuth(auth));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

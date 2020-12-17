@@ -71,6 +71,12 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
+    public void deleteAccount(String username) {
+        User user = getUserByUsername(username);
+        userRepository.delete(user);
+    }
+
+    @Override
     public void addUserData(User user) {
         contactDataRepository.save(user.getContactData());
         userRepository.save(user);

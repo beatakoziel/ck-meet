@@ -21,8 +21,8 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class DataLoader implements ApplicationRunner {
 
-    public static final String PEOPLE_IMAGES_PATH = "C:\\Users\\beata\\IdeaProjects\\ck\\src\\main\\resources\\images\\people\\";
-    public static final String MEETINGS_IMAGES_PATH = "C:\\Users\\beata\\IdeaProjects\\ck\\src\\main\\resources\\images\\meetings\\";
+    public static final String PEOPLE_IMAGES_PATH = "C:\\Users\\beata\\IdeaProjects\\ck-meet\\src\\main\\resources\\images\\people\\";
+    public static final String MEETINGS_IMAGES_PATH = "C:\\Users\\beata\\IdeaProjects\\ck-meet\\src\\main\\resources\\images\\meetings\\";
     private final IContactDataRepository contactDataRepository;
     private final IUserRepository userRepository;
     private final IMeetingRepository meetingRepository;

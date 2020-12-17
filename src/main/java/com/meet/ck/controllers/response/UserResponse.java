@@ -18,6 +18,7 @@ public class UserResponse {
     private String nickname;
     private String username;
     private Short age;
+    private String dateOfBirth;
     private String description;
     private ContactDataResponse contactData;
     private List<EnumResponse> interests;
