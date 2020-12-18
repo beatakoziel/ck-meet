@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.file.AccessDeniedException;
 
 @Slf4j
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceptionHandler {
 
     private ResponseEntity<ErrorMessage> sendExceptionMessage(Exception ex, HttpStatus httpStatus, String url) {

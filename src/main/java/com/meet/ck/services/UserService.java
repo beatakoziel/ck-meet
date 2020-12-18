@@ -9,6 +9,7 @@ import com.meet.ck.database.enums.Interest;
 import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.database.repositories.IContactDataRepository;
 import com.meet.ck.database.repositories.IImageRepository;
+import com.meet.ck.database.repositories.IRelationshipRepository;
 import com.meet.ck.database.repositories.IUserRepository;
 import com.meet.ck.utilities.AlreadyExistsException;
 import com.meet.ck.utilities.ImageUploadException;
@@ -53,7 +54,7 @@ public class UserService implements UserDetailsService, IUserService {
         user.getContactData().setLinkToFacebookProfile(request.getLinkToFacebookProfile());
         user.getContactData().setPhoneNumber(request.getPhoneNumber());
         user.setGender(request.getGender());
-        if(user.getStatus()==RegistrationStatus.NOT_COMPLETED)
+        if (user.getStatus() == RegistrationStatus.NOT_COMPLETED)
             user.setStatus(RegistrationStatus.PERSONAL_DATA);
         userRepository.save(user);
     }
@@ -65,7 +66,7 @@ public class UserService implements UserDetailsService, IUserService {
         user.setPreferredGenderToMeet(request.getPreferredGenderToMeet());
         user.setPreferredAgeToMeetFrom(request.getPreferredAgeToMeetFrom());
         user.setPreferredAgeToMeetTo(request.getPreferredAgeToMeetTo());
-        if(user.getStatus()==RegistrationStatus.PERSONAL_DATA)
+        if (user.getStatus() == RegistrationStatus.PERSONAL_DATA)
             user.setStatus(RegistrationStatus.PERSONALIZATION);
         userRepository.save(user);
     }
@@ -125,7 +126,7 @@ public class UserService implements UserDetailsService, IUserService {
         User user = getUserByUsername(username);
         Image image = null;
         try {
-             image = Image.builder()
+            image = Image.builder()
                     .name(file.getName())
                     .data(file.getBytes())
                     .type(file.getContentType())
@@ -135,7 +136,7 @@ public class UserService implements UserDetailsService, IUserService {
         }
         image = imageRepository.save(image);
         user.setAvatar(image);
-        if(user.getStatus()==RegistrationStatus.PERSONALIZATION)
+        if (user.getStatus() == RegistrationStatus.PERSONALIZATION)
             user.setStatus(RegistrationStatus.COMPLETED);
         userRepository.save(user);
     }
@@ -144,6 +145,7 @@ public class UserService implements UserDetailsService, IUserService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException(String.format("User with username %s not found", username)));
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) {
         return userRepository.findByUsername(username)

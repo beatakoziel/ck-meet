@@ -62,11 +62,19 @@ public class UserConverter {
     }
 
     public static UserResponse loggedUserToResponse(User user) {
-        System.out.println(user.getDateOfBirth().getYear());
+        String monthOfBirth = "";
+        if (user.getDateOfBirth().getMonthValue() < 10)
+            monthOfBirth = "0";
+        monthOfBirth += user.getDateOfBirth().getMonthValue();
+        String dayOfBirth = "";
+        if (user.getDateOfBirth().getDayOfMonth() < 10)
+            dayOfBirth = "0";
+        dayOfBirth += user.getDateOfBirth().getDayOfMonth();
+
         return UserResponse.builder()
                 .id(user.getId())
                 .contactData(ContactDataConverter.entityToResponse(user.getContactData()))
-                .dateOfBirth(user.getDateOfBirth().getYear() + "-" + user.getDateOfBirth().getMonthValue() + "-" + user.getDateOfBirth().getDayOfMonth())
+                .dateOfBirth(user.getDateOfBirth().getYear() + "-" + monthOfBirth + "-" + dayOfBirth)
                 .description(user.getDescription())
                 .gender(user.getGender())
                 .interests(user.getInterests()

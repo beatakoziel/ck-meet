@@ -18,11 +18,15 @@ public class RelationshipService {
     private final UserService userService;
 
     public List<Relationship> getUsersRelations(String username) {
-        List<Relationship> list = relationshipRepository.findAll().stream()
+        return relationshipRepository.findAll().stream()
                 .filter(relationship -> relationship.getUserWhoSaidHelloFirst().getUsername().equals(username) ||
                         (relationship.getUserWhoSaidHelloSecond().getUsername().equals(username) && relationship.getStatus().equals(RelationStatus.BOTH_SAID_HELLO)))
                 .collect(Collectors.toList());
-        return list;
+    }
+
+    public void deleteUserWithRelations(String username){
+        relationshipRepository.deleteAll(getUsersRelations(username));
+        userService.deleteAccount(username);
     }
 
     public Relationship getUserRelationWithUser(String loggedUserUsername, String username) {

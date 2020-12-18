@@ -19,15 +19,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MeetingRequest {
+    @NotNull
     @Size(min = 1, max = 70)
     private String name;
 
+    @NotNull
     @Size(max = 500)
     private String description;
 
     private LocalDate date;
 
+    @NotNull
     private int maxNumOfParticipants;
 
+    @NotNull
     private MeetingCategory category;
 }

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -25,9 +26,10 @@ public class PersonalDataRequest {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
 
-    @NotNull
+    @NotBlank
     @Size(max = 500)
     private String description;
+
 
     private String email;
     private String phoneNumber;

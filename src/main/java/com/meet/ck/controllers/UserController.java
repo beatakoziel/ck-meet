@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.meet.ck.controllers.converters.UserConverter.entityToResponse;
@@ -64,7 +65,7 @@ public class UserController {
     }
 
     @PutMapping("/personalization")
-    public ResponseEntity<Void> registerUserPersonalizationData(Authentication auth, @RequestBody PersonalizationDataRequest request) {
+    public ResponseEntity<Void> registerUserPersonalizationData(Authentication auth, @RequestBody @Valid PersonalizationDataRequest request) {
         userService.registerUserPersonalizationData(getUsernameFromAuth(auth), request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -83,7 +84,7 @@ public class UserController {
 
     @DeleteMapping()
     public ResponseEntity<Void> deleteAccount(Authentication auth) {
-        userService.deleteAccount(getUsernameFromAuth(auth));
+        relationshipService.deleteUserWithRelations(getUsernameFromAuth(auth));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
