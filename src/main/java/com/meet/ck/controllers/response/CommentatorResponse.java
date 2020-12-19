@@ -7,8 +7,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentResponse {
+public class CommentatorResponse {
     private Long id;
-    private CommentatorResponse commentator;
-    private String content;
+    private String nickname;
+    private byte[] avatarBytes;
 }

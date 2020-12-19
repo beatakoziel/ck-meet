@@ -10,7 +10,7 @@ public class CommentConverter {
     public static CommentResponse entityToResponse(Comment entity) {
         return CommentResponse.builder()
                 .id(entity.getId())
-                .commentatorId(entity.getCommentator()!=null? entity.getCommentator().getId(): null)
+                .commentator(UserConverter.entityToCommentatorResponse(entity.getCommentator()))
                 .content(entity.getContent())
                 .build();
     }

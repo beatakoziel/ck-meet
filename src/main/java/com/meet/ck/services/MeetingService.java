@@ -3,6 +3,7 @@ package com.meet.ck.services;
 import com.meet.ck.database.entities.Comment;
 import com.meet.ck.database.entities.Meeting;
 import com.meet.ck.database.entities.User;
+import com.meet.ck.database.repositories.ICommentRepository;
 import com.meet.ck.database.repositories.IMeetingRepository;
 import com.meet.ck.utilities.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,8 @@ import java.util.List;
 public class MeetingService {
     private final IMeetingRepository meetingRepository;
     private final UserService userService;
+    private final ICommentRepository commentRepository;
+
 
     public List<Meeting> getMeetings() {
         return meetingRepository.findAll();
@@ -68,6 +71,7 @@ public class MeetingService {
                 .content(content)
                 .commentator(user)
                 .build();
+        commentRepository.save(comment);
         meeting.getComments().add(comment);
         meetingRepository.save(meeting);
         return meeting.getComments();

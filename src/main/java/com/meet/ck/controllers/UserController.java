@@ -45,7 +45,6 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
 
-
     @GetMapping("/current")
     public ResponseEntity<UserResponse> getCurrentUser(Authentication authentication) {
         UserResponse userResponse = UserConverter.loggedUserToResponse(userService.getUserByUsername(getUsernameFromAuth(authentication)));

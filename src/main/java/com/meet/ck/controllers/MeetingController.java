@@ -3,6 +3,7 @@ package com.meet.ck.controllers;
 import com.meet.ck.controllers.converters.MeetingConverter;
 import com.meet.ck.controllers.requests.MeetingRequest;
 import com.meet.ck.controllers.response.MeetingResponse;
+import com.meet.ck.database.entities.Comment;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.services.MeetingService;
 import lombok.RequiredArgsConstructor;
@@ -66,15 +67,15 @@ public class MeetingController {
     }
 
     @PostMapping("/{meetingId}/comment")
-    public ResponseEntity<Void> addComment(Authentication authentication, @PathVariable("meetingId") Long meetingId, @RequestBody String content) {
-        meetingService.addComment(meetingId, getUsernameFromAuth(authentication), content);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<List<Comment>> addComment(Authentication authentication, @PathVariable("meetingId") Long meetingId, @RequestBody String content) {
+        List<Comment> list = meetingService.addComment(meetingId, getUsernameFromAuth(authentication), content);
+        return new ResponseEntity(list, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{meetingId}/comment/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable("meetingId") Long meetingId, @PathVariable("commentId") Long commentId) {
-        meetingService.deleteComment(meetingId, commentId);
-        return new ResponseEntity(HttpStatus.OK);
+        List<Comment> list = meetingService.deleteComment(meetingId, commentId);
+        return new ResponseEntity(list, HttpStatus.OK);
     }
 
     private String getUsernameFromAuth(Authentication authentication) {

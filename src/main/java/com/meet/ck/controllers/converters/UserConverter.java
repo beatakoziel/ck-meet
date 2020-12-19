@@ -4,12 +4,12 @@ import com.meet.ck.controllers.EnumResponse;
 import com.meet.ck.controllers.requests.AuthRequest;
 import com.meet.ck.controllers.requests.PersonalDataRequest;
 import com.meet.ck.controllers.requests.PersonalizationDataRequest;
+import com.meet.ck.controllers.response.CommentatorResponse;
 import com.meet.ck.controllers.response.MeetingParticipantResponse;
 import com.meet.ck.controllers.response.UserResponse;
 import com.meet.ck.database.entities.Relationship;
 import com.meet.ck.database.entities.User;
 import com.meet.ck.database.enums.RegistrationStatus;
-import com.meet.ck.database.enums.RelationStatus;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -87,6 +87,14 @@ public class UserConverter {
                 .preferredAgeToMeetTo(user.getPreferredAgeToMeetTo())
                 .preferredGenderToMeet(user.getPreferredGenderToMeet())
                 .avatarBytes(user.getAvatar() == null ? null : user.getAvatar().getData())
+                .build();
+    }
+
+    public static CommentatorResponse entityToCommentatorResponse(User user) {
+        return CommentatorResponse.builder()
+                .id(user.getId())
+                .avatarBytes(user.getAvatar() == null ? null : user.getAvatar().getData())
+                .nickname(user.getNickname())
                 .build();
     }
 
