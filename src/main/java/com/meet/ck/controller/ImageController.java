@@ -1,6 +1,6 @@
 package com.meet.ck.controller;
 
-import com.meet.ck.database.entities.Image;
+import com.meet.ck.database.entity.Image;
 import com.meet.ck.service.IImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

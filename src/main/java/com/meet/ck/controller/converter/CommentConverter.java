@@ -1,7 +1,7 @@
-package com.meet.ck.controller.converters;
+package com.meet.ck.controller.converter;
 
 import com.meet.ck.controller.response.CommentResponse;
-import com.meet.ck.database.entities.Comment;
+import com.meet.ck.database.entity.Comment;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

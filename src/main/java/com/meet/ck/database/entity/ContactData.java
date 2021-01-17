@@ -1,4 +1,4 @@
-package com.meet.ck.database.entities;
+package com.meet.ck.database.entity;
 
 import lombok.*;
 

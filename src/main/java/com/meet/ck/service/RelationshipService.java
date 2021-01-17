@@ -1,9 +1,9 @@
 package com.meet.ck.service;
 
-import com.meet.ck.database.entities.Relationship;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.database.entity.Relationship;
+import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RelationStatus;
-import com.meet.ck.database.repositories.IRelationshipRepository;
+import com.meet.ck.database.repository.IRelationshipRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,16 +40,19 @@ public class RelationshipService {
 
     public RelationStatus sayHello(String username, Long id) {
         Optional<Relationship> relationshipOptional = relationshipRepository.findAll().stream()
-                .filter(relationship -> (relationship.getUserWhoSaidHelloFirst().getUsername().equals(username)
-                        && relationship.getUserWhoSaidHelloSecond().getId().equals(id)) ||
-                        relationship.getUserWhoSaidHelloSecond().getUsername().equals(username))
+                .filter(relationship -> (
+                        relationship.getUserWhoSaidHelloFirst().getUsername().equals(username)
+                        && relationship.getUserWhoSaidHelloSecond().getId().equals(id))
+                        || relationship.getUserWhoSaidHelloSecond().getUsername().equals(username))
                 .findFirst();
         Relationship relationship;
         if (relationshipOptional.isPresent()) {
             relationship = relationshipOptional.get();
-            relationship.setUserWhoSaidHelloFirst(userService.getUserByUsername(username));
-            relationship.setUserWhoSaidHelloSecond(userService.getUserById(id));
-            relationship.setStatus(RelationStatus.BOTH_SAID_HELLO);
+            if (!relationship.getUserWhoSaidHelloFirst().getUsername().equals(username)) {
+                relationship.setUserWhoSaidHelloFirst(userService.getUserByUsername(username));
+                relationship.setUserWhoSaidHelloSecond(userService.getUserById(id));
+                relationship.setStatus(RelationStatus.BOTH_SAID_HELLO);
+            }
         } else {
             relationship = Relationship.builder()
                     .userWhoSaidHelloFirst(userService.getUserByUsername(username))

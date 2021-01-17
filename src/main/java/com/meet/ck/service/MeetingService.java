@@ -1,10 +1,10 @@
 package com.meet.ck.service;
 
-import com.meet.ck.database.entities.Comment;
-import com.meet.ck.database.entities.Meeting;
-import com.meet.ck.database.entities.User;
-import com.meet.ck.database.repositories.ICommentRepository;
-import com.meet.ck.database.repositories.IMeetingRepository;
+import com.meet.ck.database.entity.Comment;
+import com.meet.ck.database.entity.Meeting;
+import com.meet.ck.database.entity.User;
+import com.meet.ck.database.repository.ICommentRepository;
+import com.meet.ck.database.repository.IMeetingRepository;
 import com.meet.ck.utility.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

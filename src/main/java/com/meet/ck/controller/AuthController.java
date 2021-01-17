@@ -1,6 +1,6 @@
 package com.meet.ck.controller;
 
-import com.meet.ck.controller.requests.AuthRequest;
+import com.meet.ck.controller.request.AuthRequest;
 import com.meet.ck.controller.response.AuthResponse;
 import com.meet.ck.service.AuthService;
 import com.meet.ck.service.IUserService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.meet.ck.controller.converters.UserConverter.userAuthToEntity;
+import static com.meet.ck.controller.converter.UserConverter.userAuthToEntity;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController

@@ -1,8 +1,8 @@
 package com.meet.ck.controller;
 
-import com.meet.ck.controller.converters.RelationshipConverter;
+import com.meet.ck.controller.converter.RelationshipConverter;
 import com.meet.ck.controller.response.RelationshipResponse;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RelationStatus;
 import com.meet.ck.service.RelationshipService;
 import lombok.RequiredArgsConstructor;

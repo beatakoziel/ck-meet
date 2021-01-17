@@ -1,7 +1,6 @@
-package com.meet.ck.database.repositories;
+package com.meet.ck.database.repository;
 
-import com.meet.ck.database.entities.Image;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.database.entity.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

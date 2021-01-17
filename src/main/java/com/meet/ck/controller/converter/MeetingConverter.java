@@ -1,9 +1,9 @@
-package com.meet.ck.controller.converters;
+package com.meet.ck.controller.converter;
 
 import com.meet.ck.controller.EnumResponse;
-import com.meet.ck.controller.requests.MeetingRequest;
+import com.meet.ck.controller.request.MeetingRequest;
 import com.meet.ck.controller.response.MeetingResponse;
-import com.meet.ck.database.entities.Meeting;
+import com.meet.ck.database.entity.Meeting;
 import lombok.NoArgsConstructor;
 
 import java.util.stream.Collectors;

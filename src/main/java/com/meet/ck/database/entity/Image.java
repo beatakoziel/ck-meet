@@ -1,7 +1,6 @@
-package com.meet.ck.database.entities;
+package com.meet.ck.database.entity;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 

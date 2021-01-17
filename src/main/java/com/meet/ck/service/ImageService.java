@@ -1,9 +1,9 @@
 package com.meet.ck.service;
 
-import com.meet.ck.database.entities.Image;
-import com.meet.ck.database.entities.User;
-import com.meet.ck.database.repositories.IImageRepository;
-import com.meet.ck.database.repositories.IUserRepository;
+import com.meet.ck.database.entity.Image;
+import com.meet.ck.database.entity.User;
+import com.meet.ck.database.repository.IImageRepository;
+import com.meet.ck.database.repository.IUserRepository;
 import com.meet.ck.utility.ImageUploadException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

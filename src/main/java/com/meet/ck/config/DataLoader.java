@@ -1,11 +1,11 @@
 package com.meet.ck.config;
 
-import com.meet.ck.database.entities.*;
+import com.meet.ck.database.entity.*;
 import com.meet.ck.database.enums.Gender;
 import com.meet.ck.database.enums.Interest;
 import com.meet.ck.database.enums.MeetingCategory;
 import com.meet.ck.database.enums.RegistrationStatus;
-import com.meet.ck.database.repositories.*;
+import com.meet.ck.database.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

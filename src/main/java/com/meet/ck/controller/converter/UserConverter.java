@@ -1,14 +1,14 @@
-package com.meet.ck.controller.converters;
+package com.meet.ck.controller.converter;
 
 import com.meet.ck.controller.EnumResponse;
-import com.meet.ck.controller.requests.AuthRequest;
-import com.meet.ck.controller.requests.PersonalDataRequest;
-import com.meet.ck.controller.requests.PersonalizationDataRequest;
+import com.meet.ck.controller.request.AuthRequest;
+import com.meet.ck.controller.request.PersonalDataRequest;
+import com.meet.ck.controller.request.PersonalizationDataRequest;
 import com.meet.ck.controller.response.CommentatorResponse;
 import com.meet.ck.controller.response.MeetingParticipantResponse;
 import com.meet.ck.controller.response.UserResponse;
-import com.meet.ck.database.entities.Relationship;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.database.entity.Relationship;
+import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RegistrationStatus;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -1,8 +1,8 @@
 package com.meet.ck.service;
 
-import com.meet.ck.controller.requests.PersonalDataRequest;
-import com.meet.ck.controller.requests.PersonalizationDataRequest;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.controller.request.PersonalDataRequest;
+import com.meet.ck.controller.request.PersonalizationDataRequest;
+import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RegistrationStatus;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +20,6 @@ public interface IUserService {
 
     void deleteAccount(String username);
 
-    void addUserData(User user);
-
     User getUserById(Long id);
 
     RegistrationStatus getUserStatus(String username);
@@ -29,8 +27,6 @@ public interface IUserService {
     List<User> getUsersList();
 
     void deleteUser(Long id);
-
-    void updateUser(User user);
 
     void updateUserEnabled(Long id, boolean enabled);
 

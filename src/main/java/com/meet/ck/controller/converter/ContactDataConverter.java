@@ -1,8 +1,8 @@
-package com.meet.ck.controller.converters;
+package com.meet.ck.controller.converter;
 
-import com.meet.ck.controller.requests.ContactDataRequest;
+import com.meet.ck.controller.request.ContactDataRequest;
 import com.meet.ck.controller.response.ContactDataResponse;
-import com.meet.ck.database.entities.ContactData;
+import com.meet.ck.database.entity.ContactData;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

@@ -1,11 +1,8 @@
-package com.meet.ck.controller.requests;
+package com.meet.ck.controller.request;
 
 import com.meet.ck.database.enums.Gender;
 import com.meet.ck.database.enums.Interest;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -14,6 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonalizationDataRequest {

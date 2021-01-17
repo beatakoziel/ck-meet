@@ -1,14 +1,14 @@
 package com.meet.ck.service;
 
-import com.meet.ck.controller.requests.PersonalDataRequest;
-import com.meet.ck.controller.requests.PersonalizationDataRequest;
-import com.meet.ck.database.entities.ContactData;
-import com.meet.ck.database.entities.Image;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.controller.request.PersonalDataRequest;
+import com.meet.ck.controller.request.PersonalizationDataRequest;
+import com.meet.ck.database.entity.ContactData;
+import com.meet.ck.database.entity.Image;
+import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RegistrationStatus;
-import com.meet.ck.database.repositories.IContactDataRepository;
-import com.meet.ck.database.repositories.IImageRepository;
-import com.meet.ck.database.repositories.IUserRepository;
+import com.meet.ck.database.repository.IContactDataRepository;
+import com.meet.ck.database.repository.IImageRepository;
+import com.meet.ck.database.repository.IUserRepository;
 import com.meet.ck.utility.AlreadyExistsException;
 import com.meet.ck.utility.ImageUploadException;
 import com.meet.ck.utility.NotFoundException;
@@ -35,9 +35,6 @@ public class UserService implements UserDetailsService, IUserService {
                 .ifPresent(existingUser -> {
                     throw new AlreadyExistsException(String.format("User with username %s already exists", user.getUsername()));
                 });
-        ContactData contactData = new ContactData();
-        user.setContactData(contactData);
-        contactDataRepository.save(contactData);
         userRepository.save(user);
     }
 
@@ -75,12 +72,6 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public void addUserData(User user) {
-        contactDataRepository.save(user.getContactData());
-        userRepository.save(user);
-    }
-
-    @Override
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("User with id %s not found", id)));
@@ -104,14 +95,6 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public void updateUser(User user) {
-        Long contactDataId = getUserById(user.getId()).getContactData().getId();
-        user.getContactData().setId(contactDataId);
-        contactDataRepository.save(user.getContactData());
-        userRepository.save(user);
-    }
-
-    @Override
     public void updateUserEnabled(Long id, boolean enabled) {
         User user = getUserById(id);
         user.setEnabled(enabled);
@@ -121,7 +104,7 @@ public class UserService implements UserDetailsService, IUserService {
     @Override
     public void uploadImage(String username, MultipartFile file) {
         User user = getUserByUsername(username);
-        Image image = null;
+        Image image;
         try {
             image = Image.builder()
                     .name(file.getName())

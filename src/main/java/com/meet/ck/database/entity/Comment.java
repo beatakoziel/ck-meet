@@ -1,12 +1,9 @@
-package com.meet.ck.database.entities;
+package com.meet.ck.database.entity;
 
-import com.meet.ck.database.enums.MeetingCategory;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Builder

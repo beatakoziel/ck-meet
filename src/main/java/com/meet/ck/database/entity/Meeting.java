@@ -1,12 +1,13 @@
-package com.meet.ck.database.entities;
+package com.meet.ck.database.entity;
 
 import com.meet.ck.database.enums.MeetingCategory;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -37,11 +38,13 @@ public class Meeting {
     private User host;
 
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> participants;
 
     @Enumerated(EnumType.STRING)
     private MeetingCategory category;
 
-    @OneToMany(orphanRemoval = true)
+    @OneToMany( orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> comments;
 }

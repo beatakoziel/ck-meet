@@ -1,6 +1,6 @@
-package com.meet.ck;
+package com.meet.ck.service;
 
-import com.meet.ck.database.entities.User;
+import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.Gender;
 import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.service.UserService;

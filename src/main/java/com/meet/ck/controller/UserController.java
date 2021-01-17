@@ -1,10 +1,10 @@
 package com.meet.ck.controller;
 
-import com.meet.ck.controller.converters.UserConverter;
-import com.meet.ck.controller.requests.PersonalDataRequest;
-import com.meet.ck.controller.requests.PersonalizationDataRequest;
+import com.meet.ck.controller.converter.UserConverter;
+import com.meet.ck.controller.request.PersonalDataRequest;
+import com.meet.ck.controller.request.PersonalizationDataRequest;
 import com.meet.ck.controller.response.UserResponse;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.service.IUserService;
 import com.meet.ck.service.RelationshipService;
@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.meet.ck.controller.converters.UserConverter.entityToResponse;
+import static com.meet.ck.controller.converter.UserConverter.entityToResponse;
 
 @RestController
 @RequestMapping("/users")

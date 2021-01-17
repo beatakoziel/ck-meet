@@ -1,10 +1,10 @@
 package com.meet.ck.controller;
 
-import com.meet.ck.controller.converters.MeetingConverter;
-import com.meet.ck.controller.requests.MeetingRequest;
+import com.meet.ck.controller.converter.MeetingConverter;
+import com.meet.ck.controller.request.MeetingRequest;
 import com.meet.ck.controller.response.MeetingResponse;
-import com.meet.ck.database.entities.Comment;
-import com.meet.ck.database.entities.User;
+import com.meet.ck.database.entity.Comment;
+import com.meet.ck.database.entity.User;
 import com.meet.ck.service.MeetingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.meet.ck.controller.converters.MeetingConverter.meetingToEntity;
+import static com.meet.ck.controller.converter.MeetingConverter.meetingToEntity;
 
 @RestController
 @RequestMapping("/meetings")

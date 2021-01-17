@@ -1,6 +1,6 @@
 package com.meet.ck.service;
 
-import com.meet.ck.database.entities.Image;
+import com.meet.ck.database.entity.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
