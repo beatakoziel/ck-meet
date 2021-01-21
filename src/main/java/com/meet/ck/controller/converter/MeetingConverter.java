@@ -1,6 +1,6 @@
 package com.meet.ck.controller.converter;
 
-import com.meet.ck.controller.EnumResponse;
+import com.meet.ck.controller.response.EnumResponse;
 import com.meet.ck.controller.request.MeetingRequest;
 import com.meet.ck.controller.response.MeetingResponse;
 import com.meet.ck.database.entity.Meeting;

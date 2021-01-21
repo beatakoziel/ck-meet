@@ -8,6 +8,7 @@ import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RegistrationStatus;
 import com.meet.ck.service.IUserService;
 import com.meet.ck.service.RelationshipService;
+import com.meet.ck.utility.AuthUsernameExtractor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,11 @@ public class UserController {
 
     private final IUserService userService;
     private final RelationshipService relationshipService;
+    private final AuthUsernameExtractor extractor;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers(Authentication authentication) {
-        String username = getUsernameFromAuth(authentication);
+        String username = extractor.getUsernameFromAuth(authentication);
         return new ResponseEntity(
                 userService.getUsersList().stream()
                         .map(user -> entityToResponse(user,
@@ -47,25 +49,25 @@ public class UserController {
 
     @GetMapping("/current")
     public ResponseEntity<UserResponse> getCurrentUser(Authentication authentication) {
-        UserResponse userResponse = UserConverter.loggedUserToResponse(userService.getUserByUsername(getUsernameFromAuth(authentication)));
+        UserResponse userResponse = UserConverter.loggedUserToResponse(userService.getUserByUsername(extractor.getUsernameFromAuth(authentication)));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @PostMapping(value = "/avatar")
     public ResponseEntity<Void> uploadImage(Authentication auth, @RequestParam("image") MultipartFile file) {
-        userService.uploadImage(getUsernameFromAuth(auth), file);
+        userService.uploadImage(extractor.getUsernameFromAuth(auth), file);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/data")
     public ResponseEntity<Void> registerUserPersonalData(Authentication auth, @RequestBody PersonalDataRequest request) {
-        userService.registerUserPersonalData(getUsernameFromAuth(auth), request);
+        userService.registerUserPersonalData(extractor.getUsernameFromAuth(auth), request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/personalization")
     public ResponseEntity<Void> registerUserPersonalizationData(Authentication auth, @RequestBody @Valid PersonalizationDataRequest request) {
-        userService.registerUserPersonalizationData(getUsernameFromAuth(auth), request);
+        userService.registerUserPersonalizationData(extractor.getUsernameFromAuth(auth), request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -75,25 +77,16 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @DeleteMapping()
     public ResponseEntity<Void> deleteAccount(Authentication auth) {
-        relationshipService.deleteUserWithRelations(getUsernameFromAuth(auth));
+        relationshipService.deleteUserWithRelations(extractor.getUsernameFromAuth(auth));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/status")
     public RegistrationStatus status(Authentication authentication) {
-        return userService.getUserStatus(getUsernameFromAuth(authentication));
-    }
-
-    private String getUsernameFromAuth(Authentication authentication) {
-        return ((User) authentication.getPrincipal()).getUsername();
+        String username  = extractor.getUsernameFromAuth(authentication);
+        return userService.getUserStatus(username);
     }
 
 }

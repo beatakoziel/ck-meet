@@ -1,6 +1,5 @@
 package com.meet.ck.controller.response;
 
-import com.meet.ck.controller.EnumResponse;
 import lombok.*;
 
 import java.util.List;

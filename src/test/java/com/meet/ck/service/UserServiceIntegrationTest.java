@@ -53,7 +53,7 @@ public class UserServiceIntegrationTest {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.encode("secret"));
         //given
-        String username = "test";
+        String username = "testwrong";
         //when-then
         assertThrows(NotFoundException.class, () -> {
             sut.getUserByUsername(username);

@@ -1,5 +1,6 @@
 package com.meet.ck.controller;
 
+import com.meet.ck.controller.response.EnumResponse;
 import com.meet.ck.database.enums.Interest;
 import com.meet.ck.database.enums.MeetingCategory;
 import lombok.RequiredArgsConstructor;

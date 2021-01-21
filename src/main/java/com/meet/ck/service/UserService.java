@@ -2,17 +2,16 @@ package com.meet.ck.service;
 
 import com.meet.ck.controller.request.PersonalDataRequest;
 import com.meet.ck.controller.request.PersonalizationDataRequest;
-import com.meet.ck.database.entity.ContactData;
 import com.meet.ck.database.entity.Image;
 import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RegistrationStatus;
-import com.meet.ck.database.repository.IContactDataRepository;
 import com.meet.ck.database.repository.IImageRepository;
 import com.meet.ck.database.repository.IUserRepository;
 import com.meet.ck.utility.AlreadyExistsException;
 import com.meet.ck.utility.ImageUploadException;
 import com.meet.ck.utility.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,6 @@ public class UserService implements UserDetailsService, IUserService {
 
     private final IUserRepository userRepository;
     private final IImageRepository imageRepository;
-    private final IContactDataRepository contactDataRepository;
 
     @Override
     public void registerUser(User user) {
@@ -90,7 +88,6 @@ public class UserService implements UserDetailsService, IUserService {
     @Override
     public void deleteUser(Long id) {
         User user = getUserById(id);
-        contactDataRepository.delete(user.getContactData());
         userRepository.delete(user);
     }
 
@@ -130,5 +127,10 @@ public class UserService implements UserDetailsService, IUserService {
     public UserDetails loadUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException(String.format("User with username %s not found", username)));
+    }
+
+    @Override
+    public String getUsernameFromAuth(Authentication authentication) {
+        return ((User) authentication.getPrincipal()).getUsername();
     }
 }

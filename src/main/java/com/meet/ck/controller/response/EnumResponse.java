@@ -1,4 +1,4 @@
-package com.meet.ck.controller;
+package com.meet.ck.controller.response;
 
 import lombok.*;
 

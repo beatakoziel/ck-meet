@@ -6,10 +6,12 @@ import com.meet.ck.database.repository.IRelationshipRepository;
 import com.meet.ck.database.repository.IUserRepository;
 import com.meet.ck.service.RelationshipService;
 import com.meet.ck.service.UserService;
+import com.meet.ck.utility.AuthUsernameExtractor;
 import com.meet.ck.utility.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 

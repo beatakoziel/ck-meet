@@ -1,6 +1,6 @@
 package com.meet.ck.controller.converter;
 
-import com.meet.ck.controller.EnumResponse;
+import com.meet.ck.controller.response.EnumResponse;
 import com.meet.ck.controller.request.AuthRequest;
 import com.meet.ck.controller.request.PersonalDataRequest;
 import com.meet.ck.controller.request.PersonalizationDataRequest;

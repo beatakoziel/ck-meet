@@ -4,6 +4,7 @@ import com.meet.ck.controller.request.PersonalDataRequest;
 import com.meet.ck.controller.request.PersonalizationDataRequest;
 import com.meet.ck.database.entity.User;
 import com.meet.ck.database.enums.RegistrationStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface IUserService {
     void updateUserEnabled(Long id, boolean enabled);
 
     void uploadImage(String username, MultipartFile file);
+
+    String getUsernameFromAuth(Authentication authentication);
 }

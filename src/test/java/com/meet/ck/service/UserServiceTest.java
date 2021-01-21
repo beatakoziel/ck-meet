@@ -75,6 +75,16 @@ public class UserServiceTest {
         assertEquals((short)60, user.getPreferredAgeToMeetTo());
     }
 
+    @Test
+    void updateUserEnabledSuccessTest() {
+        sut.updateUserEnabled(9L, false);
+    }
+
+    @Test
+    void deleteUserSuccessTest() {
+        sut.deleteUser(8L);
+    }
+
     private User getUser(String username) {
         return User.builder()
                 .username(username)

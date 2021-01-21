@@ -1,6 +1,5 @@
 package com.meet.ck.controller.response;
 
-import com.meet.ck.controller.EnumResponse;
 import com.meet.ck.database.enums.Gender;
 import com.meet.ck.database.enums.RelationStatus;
 import lombok.*;

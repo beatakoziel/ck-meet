@@ -6,6 +6,7 @@ import com.meet.ck.controller.response.MeetingResponse;
 import com.meet.ck.database.entity.Comment;
 import com.meet.ck.database.entity.User;
 import com.meet.ck.service.MeetingService;
+import com.meet.ck.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import static com.meet.ck.controller.converter.MeetingConverter.meetingToEntity;
 public class MeetingController {
 
     private final MeetingService meetingService;
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<List<MeetingResponse>> getMeetings() {
@@ -36,21 +38,21 @@ public class MeetingController {
 
     @PostMapping
     public ResponseEntity<Void> addMeeting(Authentication authentication, @RequestBody @Valid MeetingRequest request) {
-        meetingService.addMeeting(getUsernameFromAuth(authentication), meetingToEntity(request));
+        meetingService.addMeeting(userService.getUsernameFromAuth(authentication), meetingToEntity(request));
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PostMapping("/{meetingId}/participate")
     public ResponseEntity<MeetingResponse> participateInMeeting(@PathVariable("meetingId") Long meetingId, Authentication authentication) {
         MeetingResponse meetingResponse =
-                MeetingConverter.meetingEntityToResponse(meetingService.participateInMeeting(meetingId, getUsernameFromAuth(authentication)));
+                MeetingConverter.meetingEntityToResponse(meetingService.participateInMeeting(meetingId, userService.getUsernameFromAuth(authentication)));
         return new ResponseEntity(meetingResponse, HttpStatus.OK);
     }
 
     @PostMapping("/{meetingId}/cancel")
     public ResponseEntity<MeetingResponse> cancelParticipationInMeeting(@PathVariable("meetingId") Long meetingId, Authentication authentication) {
         MeetingResponse meetingResponse =
-                MeetingConverter.meetingEntityToResponse(meetingService.cancelParticipationInMeeting(meetingId, getUsernameFromAuth(authentication)));
+                MeetingConverter.meetingEntityToResponse(meetingService.cancelParticipationInMeeting(meetingId, userService.getUsernameFromAuth(authentication)));
         return new ResponseEntity(meetingResponse, HttpStatus.OK);
     }
 
@@ -61,14 +63,14 @@ public class MeetingController {
     }
 
     @DeleteMapping("/{meetingId}")
-    public ResponseEntity<Void> editMeeting(@PathVariable("meetingId") Long meetingId) {
+    public ResponseEntity<Void> deleteMeeting(@PathVariable("meetingId") Long meetingId) {
         meetingService.removeMeeting(meetingId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/{meetingId}/comment")
     public ResponseEntity<List<Comment>> addComment(Authentication authentication, @PathVariable("meetingId") Long meetingId, @RequestBody String content) {
-        List<Comment> list = meetingService.addComment(meetingId, getUsernameFromAuth(authentication), content);
+        List<Comment> list = meetingService.addComment(meetingId, userService.getUsernameFromAuth(authentication), content);
         return new ResponseEntity(list, HttpStatus.CREATED);
     }
 
@@ -78,7 +80,4 @@ public class MeetingController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    private String getUsernameFromAuth(Authentication authentication) {
-        return ((User) authentication.getPrincipal()).getUsername();
-    }
 }
